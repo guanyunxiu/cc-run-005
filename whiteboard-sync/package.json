@@ -1,0 +1,16 @@
+{
+  "name": "whiteboard-sync",
+  "version": "1.0.0",
+  "description": "直播白板低延迟同步（原生 Canvas + Node.js ws）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node scripts/test-sync.js",
+    "test:unit": "node scripts/unit-crdt.js",
+    "test:pending": "node scripts/test-pending.js",
+    "stress": "node scripts/stress-crdt.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
