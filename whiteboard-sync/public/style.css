@@ -1,0 +1,296 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #f1f3f5;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------- 加入房间界面 ---------- */
+#join-screen {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.join-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.join-card h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #868e96;
+  margin-bottom: 28px;
+}
+
+#room-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 16px;
+  transition: border-color 0.15s;
+}
+
+#room-input:focus {
+  border-color: #667eea;
+}
+
+#join-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+#join-btn:hover {
+  opacity: 0.9;
+}
+
+.hint {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #adb5bd;
+}
+
+/* ---------- 白板界面 ---------- */
+#board-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+.toolbar-left,
+.toolbar-center,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-weight: 700;
+}
+
+#room-label {
+  color: #868e96;
+  font-size: 14px;
+}
+
+#color-palette {
+  display: flex;
+  gap: 6px;
+}
+
+.color-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.color-btn:hover {
+  transform: scale(1.15);
+}
+
+.color-btn.active {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px #667eea;
+}
+
+.width-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #495057;
+}
+
+#width-slider {
+  width: 100px;
+  accent-color: #667eea;
+}
+
+#width-value {
+  min-width: 20px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+#presence {
+  font-size: 13px;
+  color: #868e96;
+}
+
+/* ---------- 连接状态指示 ---------- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-connected {
+  background: #ebfbee;
+  color: #2b8a3e;
+}
+.status-connected .status-dot {
+  background: #37b24d;
+}
+
+.status-reconnecting {
+  background: #fff9db;
+  color: #e67700;
+}
+.status-reconnecting .status-dot {
+  background: #f59f00;
+  animation: blink 1s infinite;
+}
+
+.status-offline {
+  background: #ffe3e3;
+  color: #c92a2a;
+}
+.status-offline .status-dot {
+  background: #fa5252;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ---------- 画布 ---------- */
+#canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+#board {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* 关键：禁用触摸滚动/缩放手势，保证 pointer 事件连续 */
+  cursor: crosshair;
+}
+
+/* ---------- 工具按钮（撤销 / 调试开关） ---------- */
+.tool-btn {
+  padding: 5px 12px;
+  font-size: 13px;
+  border: 1px solid #dee2e6;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #495057;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.tool-btn:hover {
+  background: #f1f3f5;
+}
+
+/* ---------- CRDT 调试面板 ---------- */
+#debug-panel {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  width: 260px;
+  background: rgba(33, 37, 41, 0.92);
+  color: #f8f9fa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+#debug-panel .debug-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ffd43b;
+}
+
+#debug-panel .debug-row {
+  margin-bottom: 4px;
+}
+
+#debug-panel code {
+  color: #74c0fc;
+}
+
+#debug-panel pre {
+  margin: 4px 0 8px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  max-height: 120px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+#debug-panel .debug-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px 8px;
+}

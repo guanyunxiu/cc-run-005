@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>直播白板 · 低延迟同步</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 加入房间界面 -->
+  <div id="join-screen">
+    <div class="join-card">
+      <h1>🖊️ 直播白板</h1>
+      <p class="subtitle">低延迟实时同步白板</p>
+      <input id="room-input" type="text" placeholder="输入房间号，如 room-1" maxlength="32" autocomplete="off" />
+      <button id="join-btn">加入房间</button>
+      <p class="hint">多人输入相同房间号即可共享白板</p>
+    </div>
+  </div>
+
+  <!-- 白板界面 -->
+  <div id="board-screen" class="hidden">
+    <header id="toolbar">
+      <div class="toolbar-left">
+        <span class="logo">🖊️ 白板</span>
+        <span id="room-label"></span>
+      </div>
+
+      <div class="toolbar-center">
+        <div id="color-palette">
+          <button class="color-btn active" data-color="#1a1a1a" style="background:#1a1a1a"></button>
+          <button class="color-btn" data-color="#e03131" style="background:#e03131"></button>
+          <button class="color-btn" data-color="#1971c2" style="background:#1971c2"></button>
+          <button class="color-btn" data-color="#2f9e44" style="background:#2f9e44"></button>
+          <button class="color-btn" data-color="#f08c00" style="background:#f08c00"></button>
+          <button class="color-btn" data-color="#9c36b5" style="background:#9c36b5"></button>
+        </div>
+        <label class="width-label">
+          线宽
+          <input id="width-slider" type="range" min="1" max="24" value="4" />
+          <span id="width-value">4</span>
+        </label>
+        <button id="undo-btn" class="tool-btn" title="撤销自己最近一笔 (Ctrl+Z)">↩ 撤销</button>
+      </div>
+
+      <div class="toolbar-right">
+        <span id="presence">在线 1 人</span>
+        <button id="debug-toggle" class="tool-btn" title="CRDT 调试面板">🐞 调试</button>
+        <span id="status" class="status status-offline">
+          <span class="status-dot"></span><span id="status-text">未连接</span>
+        </span>
+      </div>
+    </header>
+
+    <div id="canvas-container">
+      <canvas id="board"></canvas>
+    </div>
+
+    <!-- CRDT 调试面板 -->
+    <div id="debug-panel" class="hidden">
+      <div class="debug-title">CRDT 调试面板</div>
+      <div class="debug-row">clientId <code id="dbg-client">-</code> · lamport <code id="dbg-lamport">0</code></div>
+      <div class="debug-row">向量时钟 VV</div>
+      <pre id="dbg-vv">(空)</pre>
+      <div class="debug-grid">
+        <span>节点 <code id="dbg-nodes">0</code></span>
+        <span>墓碑 <code id="dbg-tombs">0</code></span>
+        <span>pending <code id="dbg-pending">0</code></span>
+        <span>合并 <code id="dbg-merges">0</code></span>
+        <span>重复 <code id="dbg-dups">0</code></span>
+        <span>outbox <code id="dbg-outbox">0</code></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="crdt.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "whiteboard-sync",
+  "version": "2.0.0",
+  "description": "CRDT 协同白板（RGA + 向量时钟 + 因果一致性，原生 Canvas + Node.js ws）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node scripts/test-crdt.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
